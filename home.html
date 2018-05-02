@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		姓名：<input type="text"  placeholder="请输入姓名"/><br /><br />
+		年龄：<input type="text" /><br /><br />
+		<button>添加信息</button>
+		<button>取消</button>
+		<button>全部删除</button><br /><br />
+		搜索：<input type="text" />
+		<button>搜索</button><br /><br />
+		<table border="1">
+			<tr>
+				<td>
+					<button>全选</button>
+					<button>删除</button>
+				</td>
+				<td>姓名</td>
+				<td>年龄</td>
+				<td>添加时间</td>
+				<td>操作</td>
+			</tr>
+		</table>
+		<script type="text/javascript">
+			var ipt=document.getElementsByTagName("input")
+			var btn=document.getElementsByTagName("button")
+			var tab=document.getElementsByTagName("tbody")[0]
+			btn[0].onclick=function(){
+				//添加
+				var tr=document.createElement("tr")
+				tab.appendChild(tr)
+				//添加多选框
+				var td1=document.createElement("td")
+				td1.innerHTML="<input type='checkbox'/>"
+				tr.appendChild(td1)
+				//添加姓名
+				var td2=document.createElement("td")
+				td2.innerHTML=ipt[0].value
+				tr.appendChild(td2)
+				td2.className="name"
+				//添加年龄
+				var td3=document.createElement("td")
+				td3.innerHTML=ipt[1].value
+				tr.appendChild(td3)
+				//添加时间
+				var td4=document.createElement("td")
+				td4.innerHTML=new Date().toLocaleString()
+				tr.appendChild(td4)
+				//添加删除键
+				var td5=document.createElement("td")
+				td5.innerHTML="<button onclick='del(this)'>删除</button>"
+				tr.appendChild(td5)
+				ipt[0].value=""
+				ipt[1].value=""
+			}
+			//取消按钮
+			btn[1].onclick=function(){
+				ipt[0].value=""
+				ipt[1].value=""
+			}
+			//全部删除
+			var tr=document.getElementsByTagName("tr")
+			btn[2].onclick=function(){
+				for(var i=1;i<tr.length;i++){
+					tab.removeChild(tr[i])
+					i--
+				}
+			}
+			//搜索
+			btn[3].onclick=function(){
+				var a=false
+				var name=document.getElementsByClassName("name")
+				for(var i=0;i<name.length;i++){
+					if(name[i].innerHTML.indexOf(ipt[2].value)!=-1){
+						name[i].parentNode.style.background="red"
+						a=true
+					}
+					else{
+						name[i].parentNode.style.background="white"
+					}
+				}
+				if(a==false){
+					alert("搜索不到")
+				}
+			}
+
+			//全选
+			btn[4].onclick=function(){
+				for(var i=0;i<ipt.length;i++){
+					ipt[i].checked=true
+				}
+			}
+
+			//选中删除
+			btn[5].onclick=function(){
+				for(var i=0;i<ipt.length;i++){
+					if(ipt[i].checked==true){
+						tab.removeChild(ipt[i].parentNode.parentNode)
+						i--
+					}
+				}
+			}
+
+			//单个删除
+			function del(t){
+				tab.removeChild(t.parentNode.parentNode)
+			}
+		</script>
+	</body>
+</html>
